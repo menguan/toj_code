@@ -1,0 +1,94 @@
+#include<cstdio>//自己写的搜索过不去 
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+using namespace std;
+int main()
+{
+    int i,j,tem1,tem2,N,M,num,tem,map[202][202];
+    char ch,str[250];
+
+    while(scanf("%d%d",&N,&M)!=EOF)
+    {
+        getchar();
+        num=0;
+        if(N==0&&M==0)
+            break;
+        for(i=1;i<=N;i++)
+        {
+            for(scanf("%s",&str[1]),j=1;j<=M;j++)
+            {
+                ch=str[j];
+                if(ch=='W')
+                    tem=0;
+                if(ch=='S')
+                {
+                    tem=1;
+                    num++;
+                }
+                if(ch=='B')
+                    tem=2;
+                map[i][j]=tem;
+            }
+        }
+        for(i=1;i<=M;i++)
+        {
+            if(map[1][i]==1)
+            {
+             tem1=i;
+             tem2=i;
+             break;
+            }
+        }
+        for(i=2;i<=N;i++)
+        {
+            for(j=1;j<=M;j++)
+            {
+                if(map[i][j]==1)
+                {
+                    if(j<tem2)
+                    {
+                        tem1=tem2;
+                        tem2=j;
+                        break;
+                    }
+                    else
+                    {
+                        if(j==tem2)
+                        {
+                            tem=j;
+                            while(map[i][tem]==1)
+                            {
+                                tem++;
+                            }
+                            tem--;
+                            if(tem>tem2)
+                            {
+                                if(tem1==tem2)
+                                {
+                                    num--;
+                                    tem2=tem;
+                                }
+                                else if(tem1>tem2)
+                                {
+                                    num-=2;
+                                    tem1=tem2;
+                                    tem2=tem;
+                                }
+                                else
+                                {
+                                    tem1=tem2;
+                                    tem2=tem;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if(tem1>tem2)
+            num--;
+        printf("%d\n",num);
+}
+}
